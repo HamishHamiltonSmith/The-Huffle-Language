@@ -1,0 +1,5 @@
+udv num =  toNum(in("Enter a number: "));
+
+for (udv x=0; x<num; x=x+1) {
+    print("This is iteration: " + toStr(x+1));
+}
