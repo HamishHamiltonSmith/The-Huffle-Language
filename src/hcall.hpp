@@ -2,6 +2,7 @@
 #include<iostream>
 #include<vector>
 #include<any>
+#include<ctime>
 #include"utils.hpp"
 #include "enviroment.hpp"
 
@@ -70,6 +71,14 @@ class toStr : public HCallable {
     }
 };
 
+class clock : public HCallable {
+    public:
+    int numArgs = 0;
+
+    std::any call(Enviroment* env, std::vector<std::any> args) {
+        return std::time(0);
+    }
+};
 
 class type : public HCallable {
     public:

@@ -28,6 +28,7 @@ class Interpreter : public ExprVisitor, public StmtVisitor {
         addGlobal(*global, "type", new type());
         addGlobal(*global, "toNum", new toNum());
         addGlobal(*global, "toStr", new toStr());
+        addGlobal(*global, "time", new clock());
     }
 
     //Statement Interpretation
