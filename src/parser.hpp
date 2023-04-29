@@ -112,6 +112,8 @@ class Parser {
         try {
             if (match(1,UDV)) {
                 return varDeclaration();
+            } else if (match(1, FUNC)) {
+                return funcDeclaration("function");
             }
 
             return statement();
@@ -131,8 +133,27 @@ class Parser {
         consume(EQUAL, "invalid variable declaration (expected ';' or '='");
         Expr* val = expression();
         consume(SEMI_COL, "Expected semi-colon after statement");
-        return new Var(name, val);
-        
+        return new Var(name, val); 
+    }
+
+    Stmt* funcDeclaration(std::string type) {
+        Token name = consume(IDENTIFIER, "exprected identifier after" + type + "statement");
+        Token bracket = consume(LEFT_BR, "Expected a '(' before" + type +  "parameter list");
+        std::vector<Token> args;
+        if (!check(RIGHT_BR)) {
+            args.push_back(consume(IDENTIFIER, "Function parameters must only consist of identifiers"));
+            while (match(1,COMMA)){
+                args.push_back(consume(IDENTIFIER, "Function parameters must only consist of identifiers"));
+
+                if (args.size() >= 255) {
+                    throw ParseError("Function declaration has too many parameters", bracket.line);
+                }
+            }
+        }
+        consume(RIGHT_BR, "Expected a ')' after function parameter list");
+        consume(LEFT_CURL, "Exprected block after function signature");
+        std::vector<Stmt*> body = block();
+        return new Func(name, args, body);
     }
 
     Stmt* statement() {

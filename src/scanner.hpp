@@ -10,7 +10,7 @@
 #include "token.hpp"
 #include "types.hpp"
 
-
+  
 class Scanner {
 
 	private:
@@ -35,7 +35,7 @@ class Scanner {
 		keywords["not"] = NOT;
 		keywords["while"] = WHILE;
 		keywords["udv"] = UDV;
-		keywords["print"] = PRINT;
+		keywords["out"] = PRINT;
 		keywords["class"] = CLASS;
 		keywords["for"] = FOR;
 		keywords["if"] = IF;

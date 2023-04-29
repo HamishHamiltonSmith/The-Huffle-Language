@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/ham/Software/Cpp/Huffle/src",
-      "program": "/home/ham/Software/Cpp/Huffle/src/build/Debug/outDebug",
+      "cwd": "/home/ham/Software/Cpp/Huffle/Huffle/src",
+      "program": "/home/ham/Software/Cpp/Huffle/Huffle/src/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

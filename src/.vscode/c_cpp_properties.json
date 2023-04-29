@@ -5,12 +5,12 @@
       "includePath": [
         "${workspaceFolder}/**"
       ],
-      "compilerPath": "/usr/bin/g++",
+      "compilerPath": "/usr/bin/gcc",
       "cStandard": "${default}",
-      "cppStandard": "c++20",
+      "cppStandard": "${default}",
       "intelliSenseMode": "linux-gcc-x64",
       "compilerArgs": [
-        "-std=c++20"
+        ""
       ]
     }
   ],

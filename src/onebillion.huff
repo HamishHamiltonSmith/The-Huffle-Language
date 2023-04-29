@@ -1,5 +1,14 @@
-udv num =  toNum(in("Enter a number: "));
 
-for (udv x=0; x<num; x=x+1) {
-    print("This is iteration: " + toStr(x+1));
+func use() {
+    out("so usefull rn ngl");
 }
+
+func ham(x, y, z) {
+    z();
+    out(x +  " is cooler than " + y + " which are cooler than flamingos (not really)");
+}
+
+
+udv x = in("Enter item 1: ");
+udv y = in("Enter item 2: ");
+ham(x,y,use); 

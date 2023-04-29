@@ -10,6 +10,7 @@
 #include "error.hpp"
 #include <fstream>
 
+
 bool hadErr = false;
 
 void lrun(std::string l){

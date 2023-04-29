@@ -1,7 +1,6 @@
 #pragma once
 
 #include "token.hpp"
-#include "hcall.hpp"
 #include <any>
 #include <vector>
 
@@ -19,14 +18,12 @@ class Block;
 class Conditional;
 class CWhile;
 class Call;
+class Func;
 
 enum LiteralType {
     INT, STR
 };
 
-enum VariableType {
-    VAR, FUN
-};
 
 
 struct ExprVisitor {
@@ -46,6 +43,7 @@ struct StmtVisitor {
     virtual std::any visitBlockStmt(Block* expr)=0;
     virtual std::any visitConditionalStmt(Conditional* expr)=0;
     virtual std::any visitCWhileStmt(CWhile* expr)=0;
+    virtual std::any visitFunctionStmt(Func* expr)=0;
 };
 
 
@@ -104,6 +102,23 @@ class Block : public  Stmt {
     }
     std::any accept(StmtVisitor* v) {
         return v->visitBlockStmt(this);
+    }
+};
+
+class Func : public Stmt {
+    public:
+    std::vector<Token> params;
+    Token name;
+    std::vector<Stmt*> body;
+
+    Func(Token name, std::vector<Token> params, std::vector<Stmt*> body) {
+        this->name = name;
+        this->params = params;
+        this->body = body;
+    }
+
+    std::any accept(StmtVisitor* v) {
+        return v->visitFunctionStmt(this);
     }
 };
 
