@@ -69,7 +69,7 @@ out("A cool number is " + toStr(23));
 ```
 
 
-The `in` keyword takes a string by default (you can convert types with `toStr()` & `toNum()`, and outputs it before getting console input. This can then be stored or used:
+The `in` keyword takes a string by default (you can convert types with `toStr()` & `toNum()`), and outputs it before getting console input. This can then be stored or used:
 
 ```
 udv name = in("Enter name: ");
