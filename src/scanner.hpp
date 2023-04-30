@@ -34,7 +34,8 @@ class Scanner {
 		keywords["or"] = OR;
 		keywords["not"] = NOT;
 		keywords["while"] = WHILE;
-		keywords["udv"] = UDV;
+		keywords["[+]"] = UDV;
+		keywords["[~]"] = ARR;
 		keywords["out"] = PRINT;
 		keywords["class"] = CLASS;
 		keywords["for"] = FOR;
