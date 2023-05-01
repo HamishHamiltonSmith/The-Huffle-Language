@@ -127,14 +127,14 @@ if (pet == "dogs") {
  
 ## Functions
  
-Currently functions have no return values, but can take parameters, including other functions! Here is a basic example:
+Functions now have return values, and can take parameters, including other functions! Here is a basic example:
  
 ```
 func multiply(n1,n2) {
-  out(n1*n2);
+  return n1*n2;
 }
  
-multiply(10,5);
+out(multiply(10,5));
 ```
  
  
