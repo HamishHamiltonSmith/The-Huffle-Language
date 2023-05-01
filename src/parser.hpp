@@ -169,6 +169,10 @@ class Parser {
             return whileLoop();
         } else if (match(1,FOR)){
             return forLoop();
+        } else if (match(1, RETURN)){
+            Expr* exp = expression();
+            consume(SEMI_COL, "Expected semi-colon after return statement");
+            return new Return(exp);
         }
 
         return  expressionStatement();

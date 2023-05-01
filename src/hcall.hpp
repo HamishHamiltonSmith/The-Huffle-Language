@@ -21,6 +21,7 @@ class Interpreter : public ExprVisitor, public StmtVisitor {
     std::any visitCWhileStmt(CWhile* stmt);
     std::any visitFunctionStmt(Func* stmt);
     std::any visitExpressionStmt(Expression* stmt);
+    std::any visitReturnStmt(Return* stmt);
     std::any visitLiteralExpr(Literal* expr);
     std::any visitGroupingExpr(Grouping* expr);
     std::any visitUnaryExpr(Unary* expr);
@@ -29,7 +30,7 @@ class Interpreter : public ExprVisitor, public StmtVisitor {
     std::any visitAssignmentExpr(Assignment* expr);
     std::any visitVariableExpr(Variable* var);
     bool isTruthy(std::any expr);
-    void executeBlock(Block* block, Enviroment* blockEnv);
+    std::any executeBlock(Block* block, Enviroment* blockEnv);
     template<typename T> void castValid(int c, ...);
     void interpret(std::vector<Stmt*> stmts);
 };
@@ -37,6 +38,15 @@ class Interpreter : public ExprVisitor, public StmtVisitor {
 struct HCallable {
     int numArgs;
     virtual std::any call(Interpreter* env, std::vector<std::any> args)=0;
+};
+
+class  NestedReturn {
+    public:
+    std::any val;
+
+    NestedReturn(std::any v) {
+        this->val = v;
+    }
 };
 
 class UDCallable : public HCallable {
@@ -50,7 +60,7 @@ class UDCallable : public HCallable {
     std::any call(Interpreter* i, std::vector<std::any> args) {
         //Steps:
 
-        Enviroment* funcEnv = new Enviroment(i->env);
+        Enviroment* funcEnv = new Enviroment(true, i->env);
         if (args.size() == this->declaration->params.size()) {
             for (int x= 0; x<args.size(); x++) {
                 funcEnv->define(this->declaration->params[x], args[x]);
@@ -59,12 +69,14 @@ class UDCallable : public HCallable {
             throw new RuntimeError("Invalid argument count for function: " + this->declaration->name.lexeme,0); 
         }
 
-        i->executeBlock(new Block(this->declaration->body), funcEnv);
+        try {
+            return i->executeBlock(new Block(this->declaration->body), funcEnv);
+        } catch (NestedReturn* e) {
+            return e->val;
+        }  
         // Create new enviroment for funciton scope
         //Loop thorugh args and define in new enviroment - args are literals, use func body for names;
         //Execute block with new env
-        
-        return NULL;
     }
 };
 

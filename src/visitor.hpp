@@ -20,7 +20,7 @@ void addGlobal(Enviroment& env, Token name, HCallable* callable) {
 
 
 Interpreter::Interpreter() {
-    env = new Enviroment();
+    env = new Enviroment(false);
     global = env;
 
     addGlobal(*global, "in", new in());
@@ -43,7 +43,7 @@ std::any Interpreter::visitVarStmt(Var* stmt) {
 }
 
 std::any Interpreter::visitBlockStmt(Block* stmt) {
-    Enviroment* blockEnv = new Enviroment(env);
+    Enviroment* blockEnv = new Enviroment(this->env->isFunc, env);
     executeBlock(stmt, blockEnv);
     return NULL;
 }
@@ -84,6 +84,14 @@ std::any Interpreter::visitFunctionStmt(Func* stmt) {
 std::any Interpreter::visitExpressionStmt(Expression* stmt) {
     stmt->expression->accept(this);
     return NULL;
+}
+
+std::any Interpreter::visitReturnStmt(Return* stmt) {
+    if (env->isFunc) {
+        return stmt->returnVal->accept(this);
+    } else {
+        throw new RuntimeError("Invalid use of return statement from outside function scope", 0);
+    }
 }
 
 //Expression Interpretation
@@ -204,14 +212,24 @@ bool Interpreter::isTruthy(std::any expr) {
     return false;
 }
 
-void Interpreter::executeBlock(Block* block, Enviroment* blockEnv) {
+std::any Interpreter::executeBlock(Block* block, Enviroment* blockEnv) {
     Enviroment* prev = env;
     env = blockEnv;
+
+
     for (auto e: block->statements){
+        if (typeid(*e) == typeid(Return)) {
+            if (env->isFunc) {
+                throw new NestedReturn(e->accept(this));
+            }
+        }
+        
         e->accept(this);
     }
     env = prev;
     delete blockEnv;
+
+    return std::any();
 }
 
 template<typename T> void Interpreter::castValid(int c, ...) {

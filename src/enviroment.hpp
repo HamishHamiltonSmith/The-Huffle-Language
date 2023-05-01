@@ -9,14 +9,18 @@ class Enviroment {
     std::map<std::string, std::any> values;
     public:
     Enviroment* enclosing;
+    bool isFunc;
 
     //Global constructor
-    Enviroment() {
+    Enviroment(bool isFunc) {
         enclosing = nullptr;
+        this->isFunc = isFunc;
+        this->enclosing = nullptr;
     }
     //Local constructor
-    Enviroment(Enviroment* enclosing) {
+    Enviroment(bool isFunc, Enviroment* enclosing) {
         this->enclosing = enclosing;
+        this->isFunc = isFunc;
     }
 
 
