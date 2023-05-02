@@ -26,7 +26,7 @@ Huffle is a programming language built with c++, made for building general purpo
 
 Huffle still has a long way to go before becoming a fully fledged and useful langauge. In the future I plan to use it as part of HALEX web infastructure - a sort of internet clone I am working on, but for now this repo has simply the core language features along with core graphics functionality. Here are more immenent plans:
 
-- Add arrays + potentially other containers :container:
+- Add arrays + potentially other containers
 - Improve error reporting :heavy_exclamation_mark:
 - Add basic GUI controls (via SFML) :computer:
 - Add module system for file inclusion 
