@@ -28,8 +28,23 @@ Interpreter::Interpreter() {
     addGlobal(*global, "toNum", new toNum());
     addGlobal(*global, "toStr", new toStr());
     addGlobal(*global, "len", new length());
-    addGlobal(*global, "contains", new contains());
+    addGlobal(*global, "contains", new Contains());
     addGlobal(*global, "leave", new leave());
+    addGlobal(*global, "sin", new Sin());
+    addGlobal(*global, "cos", new Cos());
+    addGlobal(*global, "tan", new Tan());
+    addGlobal(*global, "atan", new Atan());
+    addGlobal(*global, "acos", new Acos());
+    addGlobal(*global, "asin", new Asin());
+    addGlobal(*global, "sqrt", new Sqrt());
+    addGlobal(*global, "pow", new Pow());
+    addGlobal(*global, "floor", new Floor());
+    addGlobal(*global, "ceil", new Ceil());
+    addGlobal(*global, "round", new Round());
+    addGlobal(*global, "log", new Log());
+
+    global->define("PI", (double)3.141592653589793);
+    global->define("E", (double)2.7182818284);
 }
 
 //Statement Interpretation

@@ -2,6 +2,7 @@
 #include<iostream>
 #include<vector>
 #include<any>
+#include<math.h>
 #include "expr.hpp"
 #include "utils.hpp"
 
@@ -180,7 +181,7 @@ class type : public HCallable {
     }
 };
 
-class contains : public HCallable {
+class Contains : public HCallable {
     public:
     int numArgs=2;
 
@@ -190,5 +191,113 @@ class contains : public HCallable {
         } catch (std::bad_any_cast& e ) {
             throw new RuntimeError("Can't use contains() on non-string",0);
         }
+    }
+};
+
+class Sin : public HCallable {
+    public:
+    int numArgs = 1;
+    
+    std::any call(Interpreter* i, std::vector<std::any> args) {
+        return sin(huff::anyToDouble(args[0]));
+    }
+};
+
+class Cos : public HCallable {
+    public:
+    int numArgs = 1;
+    
+    std::any call(Interpreter* i, std::vector<std::any> args) {
+        return cos(huff::anyToDouble(args[0]));
+    }
+};
+
+class Tan : public HCallable {
+    public:
+    int numArgs = 1;
+    
+    std::any call(Interpreter* i, std::vector<std::any> args) {
+        return tan(huff::anyToDouble(args[0]));
+    }
+};
+
+class Asin : public HCallable {
+    public:
+    int numArgs = 1;
+    
+    std::any call(Interpreter* i, std::vector<std::any> args) {
+        return asin(huff::anyToDouble(args[0]));
+    }
+};
+
+class Acos : public HCallable {
+    public:
+    int numArgs = 1;
+    
+    std::any call(Interpreter* i, std::vector<std::any> args) {
+        return acos(huff::anyToDouble(args[0]));
+    }
+};
+
+class Atan : public HCallable {
+    public:
+    int numArgs = 1;
+    
+    std::any call(Interpreter* i, std::vector<std::any> args) {
+        return atan(huff::anyToDouble(args[0]));
+    }
+};
+
+class Log : public HCallable {
+    public:
+    int numArgs =1;
+
+    std::any call(Interpreter* i, std::vector<std::any> args) {
+        return log(huff::anyToDouble(args[0]));
+    }
+};
+
+class Round : public HCallable {
+    public:
+    int numArgs =1;
+
+    std::any call(Interpreter* i, std::vector<std::any> args) {
+        return round(huff::anyToDouble(args[0]));
+    }
+};
+
+class Floor : public HCallable {
+    public:
+    int numArgs =1;
+
+    std::any call(Interpreter* i, std::vector<std::any> args) {
+        return floor(huff::anyToDouble(args[0]));
+    }
+};
+
+class Ceil : public HCallable {
+    public:
+    int numArgs = 1;
+
+    std::any call(Interpreter* i, std::vector<std::any> args) {
+        return ceil(huff::anyToDouble(args[0]));
+    }
+};
+
+class Pow : public HCallable {
+    public:
+    int numArgs = 2;
+
+    std::any call(Interpreter* i, std::vector<std::any> args) {
+        return pow(huff::anyToDouble(args[0]), huff::anyToDouble(args[1]));
+    }
+};
+
+class Sqrt : public HCallable {
+    public:
+    int numArgs = 2;
+
+    std::any call(Interpreter* i, std::vector<std::any> args) {
+        return pow(huff::anyToDouble(args[0]), 1/(huff::anyToDouble(args[1])));
     }
 };

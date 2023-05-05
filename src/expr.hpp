@@ -238,7 +238,6 @@ class Assignment : public Expr {
 class Literal : public Expr {
     public:
     std::any value;
-    LiteralType type;
 
     Literal(std::any a) {
         value = a;
