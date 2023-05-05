@@ -1,4 +1,4 @@
-![LOGO](https://github.com/HamishHamiltonSmith/Huffle/blob/main/assets/huffle_logo_small.png)
+![LOGO](https://github.com/HamishHamiltonSmith/Huffle/blob/main/assets/banner.png)
 
 # Huffle programming language
 
