@@ -26,7 +26,7 @@ Huffle is a programming language built with c++, made for building general purpo
 
 Huffle still has a long way to go before becoming a fully fledged and useful langauge. In the future I plan to use it as part of HALEX web infastructure - a sort of internet clone I am working on, but for now this repo has simply the core language features along with core graphics functionality. Here are more immenent plans:
 
-- Add arrays + potentially other containers :container:
+- Add arrays + potentially other containers
 - Improve error reporting :heavy_exclamation_mark:
 - Add basic GUI controls (via SFML) :computer:
 - Add module system for file inclusion 
@@ -127,14 +127,14 @@ if (pet == "dogs") {
  
 ## Functions
  
-Currently functions have no return values, but can take parameters, including other functions! Here is a basic example:
+Functions now have return values, and can take parameters, including other functions! Here is a basic example:
  
 ```
 func multiply(n1,n2) {
-  out(n1*n2);
+  return n1*n2;
 }
  
-multiply(10,5);
+out(multiply(10,5));
 ```
  
  
