@@ -136,6 +136,17 @@ func multiply(n1,n2) {
  
 out(multiply(10,5));
 ```
+
+## Naitive functions
+
+```
+toStr( arg ) - attempts to convert type to string
+toNum( arg ) - attempts to convert type to double
+contains( str1, str2 ) - checks if a string contains another string
+leave() - exits program
+type( arg ) - gets type of argument (see c++ type codes)
+length( str ) - gets length of string as double
+```
  
  
 There is a quick walkthough for getting started, soon there will be more detailed documentation!
