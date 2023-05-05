@@ -1,6 +1,5 @@
 ![LOGO](https://github.com/HamishHamiltonSmith/Huffle/blob/main/assets/banner.png)
 
-# Huffle programming language
 
 # Contents
 
