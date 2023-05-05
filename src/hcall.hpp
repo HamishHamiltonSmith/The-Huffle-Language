@@ -8,6 +8,10 @@
 class ExprVisitor;
 class StmtVisitor;
 
+//Mathematical
+//sin .cos, tan, asin, acos, atan, PI, Eulers num, log, ln, pow, mod
+//toBool, isNum, isStr, isDigit
+
 class Interpreter : public ExprVisitor, public StmtVisitor {
     public:
 
