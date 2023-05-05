@@ -19,6 +19,7 @@ class Conditional;
 class CWhile;
 class Call;
 class Func;
+class Class;
 class Return;
 
 enum LiteralType {
@@ -45,6 +46,7 @@ struct StmtVisitor {
     virtual std::any visitConditionalStmt(Conditional* expr)=0;
     virtual std::any visitCWhileStmt(CWhile* expr)=0;
     virtual std::any visitFunctionStmt(Func* expr)=0;
+    virtual std::any visitClassStmt(Class* expr)=0;
     virtual std::any visitReturnStmt(Return* expr)=0;
 };
 
@@ -52,6 +54,22 @@ struct StmtVisitor {
 struct Stmt {
     public:
     virtual std::any accept(StmtVisitor* v)=0;
+};
+
+class Class : public Stmt {
+    public:
+
+    Token name;
+    std::vector<Func*> methods;
+
+    Class (Token name, std::vector<Func*> methods) {
+        this->name = name;
+        this->methods = methods;
+    }
+
+    std::any accept(StmtVisitor* v) {
+        return v->visitClassStmt(this);
+    }
 };
 
 class Expression : public Stmt {

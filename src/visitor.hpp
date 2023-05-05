@@ -28,6 +28,8 @@ Interpreter::Interpreter() {
     addGlobal(*global, "toNum", new toNum());
     addGlobal(*global, "toStr", new toStr());
     addGlobal(*global, "len", new length());
+    addGlobal(*global, "contains", new contains());
+    addGlobal(*global, "leave", new leave());
 }
 
 //Statement Interpretation
@@ -77,7 +79,11 @@ std::any Interpreter::visitCWhileStmt(CWhile* stmt) {
 }
 
 std::any Interpreter::visitFunctionStmt(Func* stmt) {
-    addGlobal(*global, stmt->name, new UDCallable(stmt));
+    addGlobal(*global, stmt->name, new UDCallable(stmt, env));
+    return NULL;
+}
+
+std::any Interpreter::visitClassStmt(Class* stmt) {
     return NULL;
 }
 
@@ -227,7 +233,7 @@ std::any Interpreter::executeBlock(Block* block, Enviroment* blockEnv) {
         e->accept(this);
     }
     env = prev;
-    delete blockEnv;
+    //delete blockEnv;
 
     return std::any();
 }

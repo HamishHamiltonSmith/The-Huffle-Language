@@ -13,7 +13,6 @@ class Enviroment {
 
     //Global constructor
     Enviroment(bool isFunc) {
-        enclosing = nullptr;
         this->isFunc = isFunc;
         this->enclosing = nullptr;
     }
@@ -69,6 +68,7 @@ class Enviroment {
         }
 
         //Recursively traverse denested enviroments
+        //Infinite enviroments
         if (enclosing != nullptr){
             return enclosing->pull(name);
         } 

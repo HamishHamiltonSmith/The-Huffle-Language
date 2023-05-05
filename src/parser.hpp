@@ -50,6 +50,8 @@ class Parser {
                 case UDV:
                 case FOR:
                 case IF:
+                case ELF:
+                case ELSE:
                 case WHILE:
                 case PRINT:
                 case RETURN:
@@ -114,6 +116,8 @@ class Parser {
                 return varDeclaration();
             } else if (match(1, FUNC)) {
                 return funcDeclaration("function");
+            } else if (match(1, CLASS)) {
+                return classDeclaration();
             }
 
             return statement();
@@ -136,8 +140,8 @@ class Parser {
         return new Var(name, val); 
     }
 
-    Stmt* funcDeclaration(std::string type) {
-        Token name = consume(IDENTIFIER, "exprected identifier after" + type + "statement");
+    Func* funcDeclaration(std::string type) {
+        Token name = consume(IDENTIFIER, "expected identifier after" + type + "statement");
         Token bracket = consume(LEFT_BR, "Expected a '(' before" + type +  "parameter list");
         std::vector<Token> args;
         if (!check(RIGHT_BR)) {
@@ -155,6 +159,23 @@ class Parser {
         std::vector<Stmt*> body = block();
         return new Func(name, args, body);
     }
+
+    Stmt* classDeclaration() {
+        Token name = consume(IDENTIFIER, "expected identifier after class statement");
+        if (match(1,SEMI_COL)) {
+            return new Class(name, std::vector<Func*>());
+        }
+
+        consume(LEFT_CURL, "expected ';' or '{' after class statement");
+        std::vector<Func*> methods;
+        while (!isAtEnd() && !check(RIGHT_CURL)) {
+            methods.push_back(funcDeclaration("c_method"));
+        }
+
+        consume(RIGHT_CURL, "Expected '}' after function body");
+        
+        return new Class(name, methods);
+    };
 
     Stmt* statement() {
         if (match(1,PRINT)) {

@@ -29,6 +29,7 @@ class Interpreter : public ExprVisitor, public StmtVisitor {
     std::any visitBinaryExpr(Binary* expr);
     std::any visitAssignmentExpr(Assignment* expr);
     std::any visitVariableExpr(Variable* var);
+    std::any visitClassStmt(Class* stmt);
     bool isTruthy(std::any expr);
     std::any executeBlock(Block* block, Enviroment* blockEnv);
     template<typename T> void castValid(int c, ...);
@@ -53,14 +54,20 @@ class UDCallable : public HCallable {
     public:
     int numArgs;
     Func* declaration;
-    UDCallable(Func* declaration) {
+    Enviroment* closure;
+    UDCallable(Func* declaration, Enviroment* closure) {
         this->declaration = declaration;
+        this->closure = closure;
     }
 
     std::any call(Interpreter* i, std::vector<std::any> args) {
         //Steps:
 
-        Enviroment* funcEnv = new Enviroment(true, i->env);
+        //Currently every time a function is executed, we use the the current enviroment - this of course changes, and so function calls may work
+        //in some situations, but not in ones where the enviroment is diferent to where it was located - so we will capture the enviroment where the function
+        //is declared to ensure it runs consistently...
+
+        Enviroment* funcEnv = new Enviroment(true, this->closure);
         if (args.size() == this->declaration->params.size()) {
             for (int x= 0; x<args.size(); x++) {
                 funcEnv->define(this->declaration->params[x], args[x]);
@@ -131,10 +138,19 @@ class toStr : public HCallable {
                 try {
                     return std::any_cast<bool>(args[0])==true ? true : false;
                 } catch (std::bad_any_cast& e) {
-                    throw new RuntimeError("Unable to convert arg type to int",0);
+                    throw new RuntimeError("Unable to convert arg type to string",0);
                 }
             }
         }
+    }
+};
+
+class leave : public HCallable {
+    public:
+    int numArgs=0;
+
+    std::any call(Interpreter* i, std::vector<std::any> args) {
+        exit(0);
     }
 };
 
@@ -144,7 +160,7 @@ class length : public HCallable {
 
     std::any call(Interpreter* i, std::vector<std::any> args) {
         try {
-            return std::any_cast<std::string>(args[0]).length();
+            return (double)std::any_cast<std::string>(args[0]).length();
         } catch (std::bad_any_cast& e ) {
             throw new RuntimeError("Can't get length of non-string",0);
         }
@@ -157,5 +173,18 @@ class type : public HCallable {
 
     std::any call(Interpreter* i, std::vector<std::any> args) {
         return std::string(args[0].type().name());
+    }
+};
+
+class contains : public HCallable {
+    public:
+    int numArgs=2;
+
+    std::any call(Interpreter* i, std::vector<std::any> args) {
+        try {
+            return std::any_cast<std::string>(args[0]).find(std::any_cast<std::string>(args[1])) != std::string::npos;
+        } catch (std::bad_any_cast& e ) {
+            throw new RuntimeError("Can't use contains() on non-string",0);
+        }
     }
 };
