@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
 	if (argc == 2){
 		 runFile(argv[1]);
 	} else {
-		std::cout << "Huff Usage: huffl [filename].huff" << std::endl;
+		std::cout << "Huff Usage: ./a.out [filename].huff" << std::endl;
 	}
 	return 0;
 }
