@@ -192,8 +192,8 @@ class Parser {
             return forLoop();
         } else if (match(1, RETURN)){
             Expr* exp = expression();
-            consume(SEMI_COL, "Expected semi-colon after return statement");
-            return new Return(exp);
+            Token s = consume(SEMI_COL, "Expected semi-colon after return statement");
+            return new Return(exp, s.line);
         }
 
         return  expressionStatement();

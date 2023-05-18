@@ -3,6 +3,7 @@
 #include<iostream>
 #include<string>
 #include<any>
+#include<SFML/Graphics/Color.hpp>
 #include<stdarg.h>
 
 namespace huff {
@@ -50,5 +51,9 @@ namespace huff {
                 return 0;
             }
         }
+    }
+
+    sf::Color resolveColor(double r, double g, double b) {
+        return sf::Color(r,g,b);
     }
 }

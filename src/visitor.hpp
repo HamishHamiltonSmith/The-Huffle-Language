@@ -42,6 +42,11 @@ Interpreter::Interpreter() {
     addGlobal(*global, "ceil", new Ceil());
     addGlobal(*global, "round", new Round());
     addGlobal(*global, "log", new Log());
+    addGlobal(*global, "wait", new Sleep());
+    addGlobal(*global, "page", new CreatePage());
+    addGlobal(*global, "updatePage", new UpdatePage());
+    addGlobal(*global, "TEXT", new AddText());
+    addGlobal(*global, "RECT", new AddRect());
 
     global->define("PI", (double)3.141592653589793);
     global->define("E", (double)2.7182818284);
@@ -111,7 +116,7 @@ std::any Interpreter::visitReturnStmt(Return* stmt) {
     if (env->isFunc) {
         return stmt->returnVal->accept(this);
     } else {
-        throw new RuntimeError("Invalid use of return statement from outside function scope", 0);
+        throw new RuntimeError("Invalid use of return statement from outside function scope", stmt->line);
     }
 }
 
@@ -147,7 +152,7 @@ std::any Interpreter::visitCallableExpr(Call* expr) {
 
     try {
         HCallable* func = std::any_cast<HCallable*>(callee);
-        return func->call(this,args);
+        return func->call(this,expr->paren, args);
     } catch (std::bad_any_cast e) {
         throw(new RuntimeError("Illegal use of call operater on non-callable", expr->paren.line));
     } catch (std::bad_variant_access e) {

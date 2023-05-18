@@ -101,9 +101,11 @@ class Print : public Stmt {
 class Return : public Stmt {
     public:
     Expr* returnVal;
+    int line;
 
-    Return(Expr* e) {
+    Return(Expr* e, int line) {
         this->returnVal = e;
+        this->line = line;
     }
 
     std::any accept(StmtVisitor* v) {
