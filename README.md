@@ -10,7 +10,7 @@
 
 # About
 
-Huffle is a programming language built with c++, made for building general purpose (and soon HALEX) applications. Currently it is bare and unoptimised- but features most major programming constructs, and is turing complete. These include:
+Huffle is a programming language built with c++, made for building general purpose (and soon HALEX) applications. Currently it includes:
 
 - For & While loops
 - Conditionals
@@ -19,6 +19,7 @@ Huffle is a programming language built with c++, made for building general purpo
 - Type conversions
 - Arithmetic and logical evaluation
 - Variables
+- Simple GUI Controls
 
 
 # Roadmap
