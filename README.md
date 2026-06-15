@@ -28,7 +28,7 @@ Huffle still has a long way to go before becoming a fully fledged and useful lan
 
 - Add arrays + potentially other containers
 - Improve error reporting :heavy_exclamation_mark:
-- Add basic GUI controls (via SFML) :computer:
+- Add more GUI controls (via SFML) :computer:
 - Add module system for file inclusion 
 - Build up standard library with more naitive functions
 - Improve type system
